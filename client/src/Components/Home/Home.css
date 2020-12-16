@@ -1,0 +1,16 @@
+.main-container {
+    padding-top:90px;
+    height: 100%;
+    padding-right: 40px;
+    padding-left: 40px;
+}
+
+.background {
+    background-repeat: no-repeat;
+    background-image: url('https://res.cloudinary.com/dmriwkfll/image/upload/v1607833141/bg-zma.0cc0a7e9_vb5xay.svg');
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+
+}

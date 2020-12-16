@@ -1,0 +1,93 @@
+/* Layout */
+.sidebar-layout {
+    max-width: var(--width-sidebar);
+    width: var(--width-sidebar);
+    z-index: 1;
+    height: 100vh;
+}
+#side-bar {
+    height: 100vh;
+    max-width: var(--width-sidebar);
+    width: var(--width-sidebar);
+    text-align: center;
+    padding-bottom: 10px;
+    background-color: var(--purple-primary);
+    position: fixed;
+    overflow-y: scroll;
+}  
+
+.side-bar-header {
+    padding-left: 24px;
+}
+
+.logo {
+    width: 125px;
+    height: 70px;
+}
+
+/* Custom scrollbar*/
+#side-bar::-webkit-scrollbar {
+    width: 1px;
+
+}
+
+/* Menu */
+
+.side-bar-menu {
+    background-color:var(--purple-primary);
+    border-right: 1px solid var(--purple-primary);
+}
+
+.side-bar-menu li {
+    margin: 0 !important;
+    color: var(--white-bold);
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.side-bar-menu li:hover {
+    color: var(--white);
+}
+
+.side-bar-menu li::after{
+    left: 0;
+    right: -256px;
+    border-right: 3px solid var(--pink-primary) !important;
+} 
+
+.side-bar-menu.ant-menu:not(.ant-menu-horizontal) li.ant-menu-item-selected {
+    background-color: var(--purple-hover);
+    color: var(--white);
+}
+
+.side-bar-menu li svg {
+    margin-right: 10px;
+    font-size: 22px;
+}
+
+/* Button Login */
+
+.login-sidebar-container {
+    margin: 10px 15px;
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    color: var(--white);
+    background-color: var(--pink-primary);
+}
+
+.btn-login {
+    background-color: var(--opacity-bg);
+    border: 1px solid var(--white);
+    margin-top: 15px;
+    padding: 9px 24px;
+    width: 100%;
+    border-radius: 999px;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn-login:hover {
+    filter: brightness(0.9);
+}

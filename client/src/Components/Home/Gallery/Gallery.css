@@ -1,0 +1,63 @@
+
+.swiper-container {
+    padding: 0 40px;
+    height: 300px;
+    width: 100%;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 500px !important;
+    height: 280px !important;
+    border-radius: 8px;
+    transform: translateY(10px);
+}
+
+
+.swiper-slide.swiper-slide-active .card-content {
+    opacity: 1;
+}
+
+.swiper-slide .card-content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    opacity: 0;
+    color: var(--white);
+    transition: opacity .5s ease-in-out;  
+}
+.swiper-slide .card-content .title {
+    font-size: 20px;
+    color: var(--white);
+    font-weight: 700;
+    margin-bottom: 5px;
+    line-height: 1.36;
+    text-overflow: ellipsis;
+}
+
+.swiper-slide .card-content .subtitle {
+    font-size: 13px;
+    color: var(--white);
+    line-height: 1.62;
+}
+.swiper-container  .swiper-button-next,.swiper-container  .swiper-button-prev {
+    width: 300px;
+    height: 300px;
+    top: 0;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;  
+
+}
+
+.swiper-container  .swiper-button-next:hover,.swiper-container  .swiper-button-prev:hover {
+    opacity: 1;
+}
+
+.swiper-container  .swiper-button-next {
+    justify-content: flex-end;
+}
+.swiper-container  .swiper-button-prev {
+    justify-content: flex-start;
+}

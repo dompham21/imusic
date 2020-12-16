@@ -1,0 +1,90 @@
+.header {
+    width: calc(100% - var(--width-sidebar));
+    padding: 0 30px;
+    position: fixed;
+    top:0;
+    left: var(--width-sidebar);
+    height: 70px;
+    min-width: 660px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* header left */
+.header-left {
+    margin-right: 10px;
+}
+
+.header-left, .header-right  {
+    flex-grow: 1;
+}
+
+.header-left .search {
+    width: 100%;
+    max-width: 540px;
+    border-radius: 20px;
+    background-color: var(--opacity-bg);
+    height: 40px;
+    color: var(--white);
+}
+.header-left .search  span {
+    font-size: 24px;
+}
+
+.header-left .search input {
+    background-color: var(--opacity-bg-09);
+    color: var(--white);
+}
+
+.header-left .search, .search.ant-input-affix-wrapper:focus, .search.ant-input-affix-wrapper:hover{
+    border-right: 0 !important;
+    border: 0;
+    outline: none;
+    box-shadow: none;
+}
+
+/* header right */
+.header-right ul {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    list-style: none;
+    margin-bottom: 0;
+    padding: 0;
+    color: var(--white);
+}
+.header-right ul li {
+    margin-left: 10px;
+}
+
+.header-right ul li:hover {
+    filter: brightness(0.9);
+}
+
+.btn-login.login {
+    margin-top:0;
+    background-color: var(--pink-primary);
+    color: var(--white);
+    border: 0;
+}
+
+.btn-circle, .btn-circle.avt-img img {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--opacity-bg);
+    border-radius: 999px;
+    border: 0;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+/* scroll view */
+.header.is-sticky {
+    background-color: var(--purple-bg);
+    box-shadow: 0 3px 5px var(--opacity-bg-01);
+}
