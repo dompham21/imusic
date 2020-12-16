@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
@@ -9,18 +8,18 @@ const app = express()
 
 //Init mongodb
 
-mongoose.connect(process.env.MONGOURI, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true
-});
+// mongoose.connect(process.env.MONGOURI, {
+//     useNewUrlParser: true, 
+//     useUnifiedTopology: true
+// });
 
-mongoose.connection.on('connected',()=>{
-    console.log('MongoDb is connecting!')
-})
+// mongoose.connection.on('connected',()=>{
+//     console.log('MongoDb is connecting!')
+// })
 
-mongoose.connection.on('error',(err)=>{
-    console.log('MongoDb connection error!',err)
-})
+// mongoose.connection.on('error',(err)=>{
+//     console.log('MongoDb connection error!',err)
+// })
 
 //Config bodyParser
 
