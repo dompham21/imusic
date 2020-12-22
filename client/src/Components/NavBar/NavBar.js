@@ -13,9 +13,9 @@ function NavBar() {
             }
             else setSticky(false);
         })
-        return ()=>{
-            window.removeEventListener("scroll");
-        }
+        // return ()=>{
+        //     window.removeEventListener("scroll");
+        // }
     },[])
     return (
         <Row className={`header ${sticky &&'is-sticky'}`}>

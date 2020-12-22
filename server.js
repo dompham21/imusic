@@ -1,31 +1,17 @@
 const express = require('express');
+const app = express()
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 5000;
-const app = express()
+const api  = require('./routers/index');
+const database = require('./lib/database');
 
 
-//Init mongodb
-
-// mongoose.connect(process.env.MONGOURI, {
-//     useNewUrlParser: true, 
-//     useUnifiedTopology: true
-// });
-
-// mongoose.connection.on('connected',()=>{
-//     console.log('MongoDb is connecting!')
-// })
-
-// mongoose.connection.on('error',(err)=>{
-//     console.log('MongoDb connection error!',err)
-// })
-
-//Config bodyParser
-
+database.init()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use('/api', api);
 
 
 
@@ -38,6 +24,7 @@ if(process.env.NODE_ENV=="production"){
     })
 }
 
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT,()=>{
     console.log(`Server running on ${PORT}...`);

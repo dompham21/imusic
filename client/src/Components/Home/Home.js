@@ -1,28 +1,40 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import Gallery from './Gallery/Gallery'
 import './Home.css'
 import Playlist from './Playlist/Playlist'
-import { useDispatch, useSelector } from 'react-redux'
+import Top100 from './Top100/Top100'
+import { useDispatch } from 'react-redux'
 import { getPlaylist } from '../../_actions/playlist_action'
 function Home() {
-    const dispatch = useDispatch()
-    const state = useSelector(state => state.playlist)
+    const dispatch = useDispatch();
+    const [playlist, setPlaylist] = useState([])
     useEffect(() => {
-        dispatch(getPlaylist())
-        .then(res=>{
-            console.log(res)
-        })
-    }, [])
-    console.log(state)
+        const  fetchData = async () =>{
+            try {
+                let response = await dispatch(getPlaylist())
+                if(response.payload.data){
+                    setPlaylist(response.payload.data.items)
+                }
+            } catch (error) {
+                console.log(error);
+            }   
+        }
+        fetchData()
+    },[])
+    console.log(playlist);
     return (
         <div className="main-container">
             <Gallery/>
-            <Playlist title="Playlist Nghe Là Thích"/>
-            <Playlist title="Radio Nổi Bật"/>
-            <Playlist title="Cũ Mà Hay"/>
-            <Playlist title="Tuyệt Đỉnh Bolero"/>
-            <Playlist title="Zing Music Awards 2020"/>
-           
+            <Top100/>
+            {
+                playlist && playlist.length && playlist.map((list) => {
+                    if(list.sectionType === "playlist" || list.sectionType === "genre_mood"){
+                        return (
+                            <Playlist title={list.title} data={list.items} sectionType={list.sectionType}/>
+                        )
+                    }
+                })
+            }
         </div>
     )
 }

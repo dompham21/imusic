@@ -20,7 +20,7 @@ function App() {
           <PublicRouter exact path="*" component={NavBar}/>
           <PublicRouter exact path="/" component={Home}/>
         </Col>
-        <Player/>
+        {/* <Player/> */}
       </Row>
       <Switch>
           <PublicRouter exact path="/test" component={Gallery}/>

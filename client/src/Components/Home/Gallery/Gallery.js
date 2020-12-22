@@ -1,72 +1,74 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import './Gallery.css';
-import { Swiper, SwiperSlide  } from 'swiper/react';
+import { Swiper,SwiperSlide } from 'swiper/react';
 import SwiperCore, {EffectCoverflow,Autoplay,Navigation} from 'swiper';
+import { useDispatch } from 'react-redux'
+import { getGallery } from '../../../_actions/playlist_action';
+import { resizeImg } from '../../../util';
 
 
 
 function Gallery() {
-    SwiperCore.use([Navigation,EffectCoverflow,Autoplay]);
+    const [galleryData, setGalleryData] = useState([])
+    const dispatch = useDispatch()
 
+    useEffect(() => {
+        const  fetchData = async () =>{
+            try {
+                let response = await dispatch(getGallery())
+                if(response.payload.data){
+                    console.log(response.payload.data.items[0].items)
+                    setGalleryData(response.payload.data.items[0].items)
+                }
+            } catch (error) {
+                console.log(error);
+            }   
+        }
+        fetchData()
+    }, [])
+
+    SwiperCore.use([Navigation,EffectCoverflow,Autoplay]);
     return (
-        <Swiper
-            navigation
-            className="swiper-container"
-            effect= "coverflow"
-            grabCursor= {true}
-            centeredSlides= {true}
-            slidesPerView= "auto"
-            coverflowEffect= {{ 
-                rotate: 0,
-                stretch: 20,
-                depth: 200,
-                modifier: 1,
-                slideShadows: true,
-            }}
-            loop={true}
-            autoplay={{
-                delay:5000,
-                disableOnInteraction:false
-            }}
-        >
-            <SwiperSlide className="swiper-slide" style={{backgroundImage:"url(https://photo-zmp3.zadn.vn/banner/4/b/c/f/4bcf92658596deacb9a3122de440260c.jpg)"}}>
-                <div className="card-content">
-                    <div className="title">Chiều Thu Họa Bóng Nàng</div>
-                    <h3 className="subtitle">Lời tâm sự của anh chàng lụy tình DatKaa khiến người nghe không khỏi chạnh lòng</h3>
-                </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide" style={{backgroundImage:"url(https://photo-zmp3.zadn.vn/banner/5/6/7/1/5671980f5103a81415a69704087254ab.jpg)"}}>
-            <div className="card-content">
-                    <div className="title">Chiều Thu Họa Bóng Nàng</div>
-                    <h3 className="subtitle">Lời tâm sự của anh chàng lụy tình DatKaa khiến người nghe không khỏi chạnh lòng</h3>
-                </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide" style={{backgroundImage:"url(https://res.cloudinary.com/dmriwkfll/image/upload/v1606453689/ldqrdtobbetoxasja2go.jpg)"}}>
-            <div className="card-content">
-                    <div className="title">Chiều Thu Họa Bóng Nàng</div>
-                    <h3 className="subtitle">Lời tâm sự của anh chàng lụy tình DatKaa khiến người nghe không khỏi chạnh lòng</h3>
-                </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide" style={{backgroundImage:"url(https://res.cloudinary.com/dmriwkfll/image/upload/v1606453689/ldqrdtobbetoxasja2go.jpg)"}}>
-            <div className="card-content">
-                    <div className="title">Chiều Thu Họa Bóng Nàng</div>
-                    <h3 className="subtitle">Lời tâm sự của anh chàng lụy tình DatKaa khiến người nghe không khỏi chạnh lòng</h3>
-                </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide" style={{backgroundImage:"url(https://res.cloudinary.com/dmriwkfll/image/upload/v1606453689/ldqrdtobbetoxasja2go.jpg)"}}>
-            <div className="card-content">
-                    <div className="title">Chiều Thu Họa Bóng Nàng</div>
-                    <h3 className="subtitle">Lời tâm sự của anh chàng lụy tình DatKaa khiến người nghe không khỏi chạnh lòng</h3>
-                </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide" style={{backgroundImage:"url(https://res.cloudinary.com/dmriwkfll/image/upload/v1606453689/ldqrdtobbetoxasja2go.jpg)"}}>
-            <div className="card-content">
-                    <div className="title">Chiều Thu Họa Bóng Nàng</div>
-                    <h3 className="subtitle">Lời tâm sự của anh chàng lụy tình DatKaa khiến người nghe không khỏi chạnh lòng</h3>
-                </div>
-            </SwiperSlide>
-         
-        </Swiper>
+        <div>
+            {
+            galleryData && galleryData.length && 
+                <Swiper
+                    navigation
+                    className="swiper-container swiper-gallery"
+                    effect= "coverflow"
+                    grabCursor= {true}
+                    centeredSlides= {true}
+                    slidesPerView= "auto"
+                    coverflowEffect= {{ 
+                        rotate: 0,
+                        stretch: 20,
+                        depth: 200,
+                        modifier: 1,
+                        slideShadows: true,
+                    }}
+                    loop={true}
+                    autoplay={{
+                        delay:5000000,
+                        disableOnInteraction:false
+                    }}
+                >
+                    {
+                        galleryData.map(gallery=>{
+                            return (
+                                <SwiperSlide className="swiper-slide swiper-slide-gallery" style={{backgroundImage:`url(${resizeImg(gallery.thumbnail,600,'16x9')})`}} key={gallery.encodeId}>
+                                    <div className="card-content">
+                                        <div className="title">{gallery.title}</div>
+                                        <h3 className="subtitle">{gallery.description}</h3>
+                                    </div>
+                                </SwiperSlide>
+                            )
+                        })
+                    }   
+                </Swiper>
+        }
+        </div>
+        
+        
         
         
     )
