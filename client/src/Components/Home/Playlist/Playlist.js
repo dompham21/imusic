@@ -4,14 +4,11 @@ import { BsFillPlayFill } from 'react-icons/bs';
 import { Swiper, SwiperSlide  } from 'swiper/react';
 import SwiperCore, {Navigation} from 'swiper';
 import { useDispatch } from 'react-redux'
-import Track from './Track.js';
 
 function Playlist(props) {
     const {title, data, sectionType} = props;
-
     SwiperCore.use([Navigation]);
-    const dispatch = useDispatch()
-    console.log(data);
+    
     return (
         <section className="playlist-section">
             <div className="container">

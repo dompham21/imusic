@@ -26,7 +26,6 @@ export const getPlaylist = async () => {
     };
     try {
         let request  = await axios(config)
-        console.log(request);
         return {
             payload: request,
             type: GET_PLAYLIST,

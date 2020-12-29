@@ -17,7 +17,6 @@ function Gallery() {
             try {
                 let response = await dispatch(getGallery())
                 if(response.payload.data){
-                    console.log(response.payload.data.items[0].items)
                     setGalleryData(response.payload.data.items[0].items)
                 }
             } catch (error) {
