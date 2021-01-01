@@ -1,5 +1,0 @@
-@import '~antd/dist/antd.css';
-
-.main-layout {
-    width: calc(100% - 256px);
-}

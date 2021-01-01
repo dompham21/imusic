@@ -3,8 +3,8 @@ import './Gallery.css';
 import { Swiper,SwiperSlide } from 'swiper/react';
 import SwiperCore, {EffectCoverflow,Autoplay,Navigation} from 'swiper';
 import { useDispatch } from 'react-redux'
-import { getGallery } from '../../../_actions/playlist_action';
-import { resizeImg } from '../../../util';
+import { getGallery } from '../../_actions/playlist_action';
+import { resizeImg } from '../../util';
 
 
 
@@ -19,6 +19,7 @@ function Gallery() {
                 if(response.payload.data){
                     setGalleryData(response.payload.data.items[0].items)
                 }
+                
             } catch (error) {
                 console.log(error);
             }   
@@ -47,14 +48,14 @@ function Gallery() {
                     }}
                     loop={true}
                     autoplay={{
-                        delay:5000000,
+                        delay:5000,
                         disableOnInteraction:false
                     }}
                 >
                     {
                         galleryData.map(gallery=>{
                             return (
-                                <SwiperSlide className="swiper-slide swiper-slide-gallery" style={{backgroundImage:`url(${resizeImg(gallery.thumbnail,600,'16x9')})`}} key={gallery.encodeId}>
+                                <SwiperSlide className="swiper-slide swiper-slide-gallery" style={{backgroundImage:`url(${gallery.banner})`}} key={gallery.encodeId}>
                                     <div className="card-content">
                                         <div className="title">{gallery.title}</div>
                                         <h3 className="subtitle">{gallery.description}</h3>

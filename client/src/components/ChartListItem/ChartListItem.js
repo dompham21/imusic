@@ -1,7 +1,7 @@
 import React from 'react'
-import { getPercent } from '../../../util';
+import { getPercent } from '../../util';
 
-function ChartList(props) {
+function ChartListItem(props) {
     const {items,chart} = props;
     let list  = items.slice(0,3);
     let arrPercent = getPercent(chart.items)
@@ -29,4 +29,4 @@ function ChartList(props) {
     )
 }
 
-export default ChartList
+export default ChartListItem

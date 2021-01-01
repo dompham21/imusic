@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
 import { BrowserRouter } from "react-router-dom";
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
@@ -11,7 +10,7 @@ import rootReducer from './_reducers';
 
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
-
+import App from './containers/App/App'
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
 ReactDOM.render(
   <Provider
@@ -22,7 +21,7 @@ ReactDOM.render(
         )}
     >
         <BrowserRouter>
-            <App />
+            <App/>
         </BrowserRouter>
   </Provider>
     , document.getElementById('root'));

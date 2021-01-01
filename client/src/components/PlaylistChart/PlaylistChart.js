@@ -1,8 +1,8 @@
 import React from 'react'
-import Chart from './Chart/Chart';
 import './PlaylistChart.css'
 import { Row, Col } from 'antd';
-import ChartList from './ChartList';
+import ChartListItem from '../ChartListItem/ChartListItem';
+import Chart from '../Chart/Chart'
 function PlaylistChart(props) {
 
     return (
@@ -12,7 +12,7 @@ function PlaylistChart(props) {
             <div className="chart-header">Bảng Xếp Hạng</div>
             <Row className="chart-row">
                 <Col className="chart-col-list">
-                    <ChartList {...props}/>
+                    <ChartListItem {...props}/>
                     <div className="chart-btn-center">
                         <button className="btn-show-more">Xem top 100</button>
                     </div>

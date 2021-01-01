@@ -1,12 +1,12 @@
 import React, { useEffect,useState } from 'react'
-import Gallery from './Gallery/Gallery'
+import Gallery from '../../Components/Gallery/Gallery'
 import './Home.css'
-import Playlist from './Playlist/Playlist'
-import Top100 from './Top100/Top100'
+import Playlist from '../../Components/Playlist/Playlist'
+import Top100 from '../../Components/PlaylistTop100/Top100'
 
 import { useDispatch } from 'react-redux'
 import { getPlaylist } from '../../_actions/playlist_action'
-import PlaylistChart from './PlaylistChart/PlaylistChart'
+import PlaylistChart from '../../Components/PlaylistChart/PlaylistChart'
 function Home() {
     const dispatch = useDispatch();
     const [playlist, setPlaylist] = useState([])
@@ -23,7 +23,7 @@ function Home() {
         }
         fetchData()
     },[])
-    console.log(playlist);
+
     return (
         <div className="main-container">
             <Gallery/>
@@ -38,7 +38,6 @@ function Home() {
                     else if(list.sectionType === "RTChart"){
                         return (
                             <PlaylistChart  key={index} chart={list.chart} items={list.items}/>
-                            // <Chart key={index} chart={list.chart} items={list.items}/>
                         )
                     }
                 })

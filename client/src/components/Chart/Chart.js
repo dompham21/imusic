@@ -1,9 +1,10 @@
-import React from 'react'
+import React,{useRef} from 'react'
 import './Chart.css';
 import { Line } from "react-chartjs-2";
 
 function Chart(props) {
     const {items,chart} = props;
+    const refChart = useRef(null);
 
     let arrColor = ['#3e95cd',"#8e5ea2","#3cba9f"]
     let dataset = [];
@@ -105,20 +106,48 @@ function Chart(props) {
         caretEl.style.borderColor = tooltip.labelColors[0].borderColor + ' transparent' + ' transparent';
     }
 
+    const drawLineVertical = {
+        afterDraw: function(chart) {
+            if (chart.tooltip._active && chart.tooltip._active.length) {
+              const activePoint = chart.controller.tooltip._active[0];
+              const ctx = chart.ctx;
+              const x = activePoint.tooltipPosition().x;
+              const topY = chart.scales['y-axis-0'].top;
+              const bottomY = chart.scales['y-axis-0'].bottom;
+             
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(x, topY);
+              ctx.lineTo(x, bottomY);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = '#e23fa9';
+              ctx.stroke();
+              ctx.restore();
+            }
+          }
+    }
+
+  
+    const datasetKeyProvider=()=>{ 
+        return Math.random();
+    } 
+    
     return (
         <div id="chartjs-wrapper">
             <Line
+                ref={refChart}
+                datasetKeyProvider={datasetKeyProvider}
                 id="chartjs"
                 data={{
                     labels: label,
                     datasets: dataset,
                 }}
+                plugins={[drawLineVertical]}
                 options={{
                 responsive: true,
                 legend: {
                     display: false
                 },
-                
                 tooltips: {
                     enabled: false,
                     callbacks: {
