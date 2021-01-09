@@ -1,0 +1,17 @@
+.container-banner-loading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    padding-top: 20px;
+    height: 300px;
+    width: 100%;
+}
+
+.container-banner-loading > span {
+    width: 32%;
+    flex-grow: 1;
+}
+
+.container-banner-loading > span:first-child,.container-banner-loading > span:last-child{
+    width: 20%;
+}

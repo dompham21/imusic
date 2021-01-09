@@ -26,6 +26,7 @@ function Chart(props) {
         objtemp.pointHoverBackgroundColor = arrColor[index];
         objtemp.pointHoverBorderColor = 'white';
         dataset.push(objtemp)
+        return i;
     })
     let list  = items.slice(0,3);
     const customTooltip = (tooltip) => {
@@ -103,7 +104,7 @@ function Chart(props) {
         tooltipEl.style.opacity = 1;
         caretEl.style.opacity = 1;
         tooltipEl.style.backgroundColor = tooltip.labelColors[0].borderColor;
-        caretEl.style.borderColor = tooltip.labelColors[0].borderColor + ' transparent' + ' transparent';
+        caretEl.style.borderColor = `${tooltip.labelColors[0].borderColor} transparent transparent`
     }
 
     const drawLineVertical = {

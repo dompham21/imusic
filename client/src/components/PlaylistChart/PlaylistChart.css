@@ -4,6 +4,7 @@
     overflow: hidden;
     position: relative;
     margin-top: 30px;
+    margin-bottom: 90px;
 }
 
 .chart-container .bg-img, .chart-container .bg-gradient {
@@ -20,7 +21,7 @@
 
 .chart-container .bg-gradient {
     opacity: 0.95;
-    z-index: 0;
+    z-index: var(--zindex-chart);
     background-image: linear-gradient(180deg,#740091,#2d1a4c);
 }
 
@@ -113,9 +114,27 @@
     color: var(--white);
     border: 1px solid var(--white);
     background-color: var(--opacity-bg-07);
-
+    outline: none;
 }
 .btn-show-more:hover{
     background-color:  var(--opacity-bg-02);
 
 }
+
+
+@media screen and (max-width: 900px) { 
+    .ant-row.chart-row {
+        flex-direction: column;
+    
+    }
+
+    .chart-col-list {
+        width: 100%;
+    }
+  
+    .chart-col-line {
+        width: 100%;
+        margin-top: 20px;
+
+    }
+  }

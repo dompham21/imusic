@@ -22,9 +22,9 @@ const getHmac512 = (str,key) => {
     return hmac.update(Buffer.from(str,'utf-8')).digest('hex');
 }
 
-const hashParam = (nameAPI,time,params = '') => {
-
-    const hash256 = getHash256(`ctime=${time}${params}version=${process.env.API_VERSION}`);
+const hashParam = (nameAPI,time,params = '',count='') => {
+    console.log(count)
+    const hash256 = getHash256(`${count}ctime=${time}${params}version=${process.env.API_VERSION}`);
 
     return getHmac512(nameAPI + hash256,process.env.SERCRET_KEY);
 }
@@ -33,11 +33,11 @@ const getCookie = async () => {
         await request.get('https://zingmp3.vn/');
     }
 }
-exports.requestAPI = async (nameAPI,qs,param) => {
+exports.requestAPI = async (nameAPI,qs,param,count) => {
     await getCookie();
 
     let time = Math.floor(Date.now() / 1000);
-    let sig  = hashParam(nameAPI,time,param)
+    let sig  = hashParam(nameAPI,time,param,count)
  
     return request({
         uri: process.env.API_URL + nameAPI,

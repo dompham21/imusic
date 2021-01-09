@@ -1,6 +1,6 @@
 .player-controls {
     position: fixed;
-    z-index: 2;
+    z-index: var(--zindex-player);
     bottom: 0;
     width: 100%;
 }
@@ -37,7 +37,7 @@
     position: relative;
 }
 
-.player-controls-left .media-animate .media-left .thumbnail-wrapper .thumbnail .img-rounded{
+.player-controls-left .media-animate .media-left .thumbnail-wrapper .thumbnail .img-rounded {
     position: relative;
     overflow: hidden;
     animation-name: spin;
@@ -186,36 +186,54 @@
     cursor: pointer;
 }
 
-/* custom slider */
-.ant-slider.silder{
+.time-slider-bar {
+    height: 15px;
     width: 100%;
-   
+    cursor: pointer;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.ant-slider.silder .ant-slider-rail {
+/* custom slider */
+.time-slider-bar .css-1rq3mry-Slider { /* slider */
     height: 3px;
     border-radius: 4px;
     background-color: var(--opacity-bg-03);
+    width: 100%;
+    opacity: 1;
 }
 
-.ant-slider.silder .ant-slider-track {
+.time-slider-bar  .css-6nna9v-Slider { /* track */
     background-color: var(--white);
     height: 3px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.ant-slider.silder:hover .ant-slider-rail,.ant-slider.silder:hover .ant-slider-track {
+.time-slider-bar .css-3uoig3-Slider { /* rail */
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--white);
+    opacity: 0;
+
+}
+
+.time-slider-bar .css-1rq3mry-Slider > div:last-child {
+    top: calc(50% + 1px) !important;
+}
+
+.time-slider-bar:hover  .css-1rq3mry-Slider,.time-slider-bar:hover  .css-1rq3mry-Slider .css-6nna9v-Slider {
     height: 5px;
 }
-.ant-slider.silder:hover .ant-slider-handle {
+
+.time-slider-bar:hover  .css-1rq3mry-Slider .css-3uoig3-Slider {
     opacity: 1;
 }
 
-.ant-slider.silder .ant-slider-handle  {
-    opacity: 0;
-    border: 0;
-}
+
 /* palyer action */
 .player-controls-bar .player-action {
     display: flex;
@@ -278,10 +296,13 @@
     margin: 0;
 }
 
+.player-controls-right .volume .action-btn-play.btn-volume {
+    padding-left: 8px;
+}
+
 .divide {
     height: 33px;
     width: 1px;
     margin: 0 20px;
     background-color: var(--opacity-bg-02);
-
 }

@@ -34,11 +34,47 @@ body {
     --opacity-bg-01: #0000001a;
     --opacity-bg-03: #ffffff4d;
     --opacity-bg-02: #ffffff33;
+    --loading-bg: #ffffff1a;
     /* size varible */
     --width-sidebar: 256px;
+    /* z-index varible */
+    --zindex-chart-tooltip: 5;
+    --zindex-chart: 0;
+    --zindex-playlist: 2;
+    --zindex-home-bg: -1;
+    --zindex-navbar: 5;
+    --zindex-player: 10;
+    --zindex-sidebar: 10;
+    /* display glocal scroll bar */
   }
   
 
-  .main-layout {
+.main-layout {
     width: calc(100% - 256px);
+}
+
+body .react-loading-skeleton {
+  background-color: var(--loading-bg);
+  background-image: linear-gradient(90deg,transparent,var(--loading-bg),transparent)
+}
+
+/* Custom scrollbar*/
+::-webkit-scrollbar-track {
+  background-color: var(--purple-primary);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--opacity-bg-03);
+  border-radius: 2px;
+}
+
+@media screen and (max-width: 1020px) { 
+  .main-layout {
+    width: calc(100% - 70px);
+  }
+
 }

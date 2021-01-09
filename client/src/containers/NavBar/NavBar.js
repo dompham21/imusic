@@ -3,6 +3,7 @@ import './NavBar.css';
 import { Row, Col, Input,Tooltip } from 'antd';
 import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdNotificationsOutline } from 'react-icons/io'
+import avatar from '../../assets/Images/avatar-default.jpeg'
 function NavBar() {
     const [sticky, setSticky] = useState(false)
 
@@ -40,7 +41,7 @@ function NavBar() {
                     </Tooltip>
                     <Tooltip title="Thông tin tài khoản" placement="bottom" overlayStyle={{fontSize:'12px'}}>
                         <li className="btn-circle avt-img"> 
-                            <img alt='avt' src="https://avatar.talk.zdn.vn/default"/>
+                            <img alt='avt' src={avatar}/>
                         </li>
                     </Tooltip>
                     <li>
