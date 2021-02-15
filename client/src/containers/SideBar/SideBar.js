@@ -8,6 +8,7 @@ import { BiAlbum,BiUser } from 'react-icons/bi';
 import SidebarLoading from '../../components/SidebarLoading/SidebarLoading';
 import { useSelector } from 'react-redux';
 import logo from '../../assets/Images/logo.png';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 let siderBarArr = [
     {
         title: "Khám phá",
@@ -71,7 +72,12 @@ function SideBar() {
     return (
         <Col className={`side-bar${showSidebar?' is-expand':''}`}>
             <Row className="side-bar-header">
-                <img className="logo" alt="logo" src={logo}/>
+                <LazyLoadImage
+                    effect="blur"
+                    alt="logo"
+                    src={logo} 
+                    className="logo" 
+                />
             </Row>
             <Row style={{height: "100%", paddingBottom: "150px"}}>
                 <div className="scroll-container">

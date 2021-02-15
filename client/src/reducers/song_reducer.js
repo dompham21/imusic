@@ -30,7 +30,6 @@ const reducer = (state = initialState, action) => {
         }
       }
       case songTypes.FETCH_PLAYLIST_SONG: {
-        console.log(action.encodeId);
         return {
           ...state,
           isFetching: true,
@@ -55,7 +54,6 @@ const reducer = (state = initialState, action) => {
         }
       } 
       case songTypes.FETCH_SONG: {
-        console.log(action.songInfo);
         localStorage.setItem('imusic_currSongInfo',JSON.stringify(action.songInfo))
         return {
           ...state,
@@ -85,7 +83,6 @@ const reducer = (state = initialState, action) => {
         }
       }
       case songTypes.FETCH_SUGGESTED_SONG: {
-        console.log(action.encodeId);
         return {
           ...state,
           suggestedSongs: []
@@ -95,7 +92,7 @@ const reducer = (state = initialState, action) => {
         const { data } = action.payload;
         return {
           ...state,
-          suggestedSongs: data.items
+          suggestedSongs: data
         };
       }
       case songTypes.FETCH_SUGGESTED_SONG_FAILED: {

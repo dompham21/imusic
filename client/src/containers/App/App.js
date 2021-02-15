@@ -15,21 +15,27 @@ const DrawerQueue = React.lazy(()=> import('../DrawerQueue/DrawerQueue'))
 
 function App() {
   useEffect(() => {
-
       !localStorage.getItem('imusic_queue') && localStorage.setItem('imusic_queue',JSON.stringify({
           currentEncodeId: "",
           encodeIds: [],
-          recommend: {},
+          itemsMap: [],
+          recommend: [],
+          preSong: []
         }));
 
       !localStorage.getItem('imusic_player') && localStorage.setItem('imusic_player',JSON.stringify({
-        volume: 1,
         beforeMuteVolume: 1
       }));
+
       !localStorage.getItem('imusic_currSongInfo') && localStorage.setItem('imusic_currSongInfo',JSON.stringify({}))
 
+      !localStorage.getItem('imusic_history') && localStorage.setItem('imusic_history',JSON.stringify({
+        preSong: []
+      }));
 
       !localStorage.getItem('imusic_hasPlayer') && localStorage.setItem('imusic_hasPlayer',false)
+
+      !localStorage.getItem('imusic_defaultVolume') && localStorage.setItem('imusic_defaultVolume','1')
   }, [])
   return (
     <Suspense fallback={(<div></div>)}>

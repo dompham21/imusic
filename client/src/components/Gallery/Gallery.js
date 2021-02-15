@@ -3,6 +3,7 @@ import './Gallery.css';
 import { Swiper,SwiperSlide } from 'swiper/react';
 import SwiperCore, {EffectCoverflow,Autoplay,Navigation} from 'swiper';
 import { useDispatch, useSelector } from 'react-redux'
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 
 
@@ -39,10 +40,12 @@ function Gallery(props) {
                         gallery.map(track=>{
                             return (
                                 <SwiperSlide className="swiper-slide swiper-slide-gallery" style={{backgroundImage:`url(${track.banner})`}} key={track.encodeId}>
-                                    <div className="card-content">
-                                        <div className="title">{track.title}</div>
-                                        <h3 className="subtitle">{track.description}</h3>
-                                    </div>
+                                    <LazyLoadComponent>
+                                        <div className="card-content">
+                                            <div className="title">{track.title}</div>
+                                            <h3 className="subtitle">{track.description}</h3>
+                                        </div>
+                                    </LazyLoadComponent>  
                                 </SwiperSlide>
                             )
                         })

@@ -4,6 +4,7 @@ import { Row, Col, Input,Tooltip } from 'antd';
 import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdNotificationsOutline } from 'react-icons/io'
 import avatar from '../../assets/Images/avatar-default.jpeg'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 function NavBar() {
     const [sticky, setSticky] = useState(false)
 
@@ -40,8 +41,14 @@ function NavBar() {
                         </li>
                     </Tooltip>
                     <Tooltip title="Thông tin tài khoản" placement="bottom" overlayStyle={{fontSize:'12px'}}>
-                        <li className="btn-circle avt-img"> 
-                            <img alt='avt' src={avatar}/>
+                        <li className="btn-circle avt-img">
+                            <LazyLoadImage
+                                effect="blur"
+                                alt='avt'
+                                height={'100%'}
+                                src={avatar} 
+                                width={'100%'} 
+                            /> 
                         </li>
                     </Tooltip>
                     <li>

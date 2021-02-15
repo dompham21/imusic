@@ -1,43 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { Drawer,Tabs } from 'antd';
+import { Drawer } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { hideDrawerQueue, showDrawerQueue } from '../../actions/ui_action';
-import InfiniteScroll from 'react-infinite-scroller';
+import { showDrawerQueue } from '../../actions/ui_action';
 import './DrawerQueue.css';
-import { List, Avatar, Spin } from 'antd';
+import { List } from 'antd';
 import ListSongQueue from '../../components/ListSongQueue';
-import { getSongPlaylist } from '../../apis/song_api';
+
 
 function DrawerQueue() {
     const toggeShowDrawerQueue = useSelector(state => state.ui.toggeShowDrawerQueue)
-    const queues = useSelector(state => state.queue.queues)
-    const currSong = useSelector(state => state.song.currSong)
-    const suggestedSongs = useSelector(state => state.song.suggestedSongs);
-    const currSongInfo = JSON.parse(localStorage.getItem('imusic_currSongInfo'));
-    const {playlistEncodeId} = JSON.parse(localStorage.getItem('imusic_queue'));
+    let queues = JSON.parse(localStorage.getItem('imusic_queue')).itemsMap
+    let suggestedSongs = useSelector(state => state.song.suggestedSongs);
 
-    // const [data, setData] = useState([])
+    let { recommend } = JSON.parse(localStorage.getItem('imusic_queue')) 
+    let queue = JSON.parse(localStorage.getItem('imusic_queue'));
+    const currSong = useSelector(state => state.song.currSong)
+    const currSongInfo = JSON.parse(localStorage.getItem('imusic_currSongInfo'));
+    let { preSong } = JSON.parse(localStorage.getItem('imusic_queue'));
+    preSong =  preSong.filter(i=>i.encodeId !== currSongInfo.encodeId);
+    queues = queues.filter(i=>i.encodeId !== currSongInfo.encodeId);
+    
+    
     const [loading, setLoading] = useState(false)
     const [hasMore, setHasMore] = useState(true)
     const dispatch = useDispatch()
     const [toggleBtn,setToggleBtn] = useState(false);
-    let nextPlaylistSongs =  queues.filter(i => i.encodeId !== currSong.encodeId)//remove current song 
- 
-    const handleInfiniteOnLoad = (page) => {
-      console.log(playlistEncodeId)
-      setLoading(true)
-      if (nextPlaylistSongs.length > 100) {
-        setHasMore(false);
-        setLoading(false);
-        return;
-      }
-      // fetchData(res => {
-      //   let a = data.concat(res.results);
-      //   console.log(data);
-      //   setData(a)
-      //   setLoading(false);
-      // });
-    };
+
+    let nextPlaylistSongs = queues
+    
+  
     const onClose = () => {
       dispatch(showDrawerQueue())
     };
@@ -66,13 +57,17 @@ function DrawerQueue() {
           <div className="drawer-queue-scroll">
           <div className="scroll-container">
             <div className="scroll-content">
-              {/* <div className="previous-song">
-                <ListSongQueue 
-                  thumbnail="https://photo-resize-zmp3.zadn.vn/w94_r1x1_jpeg/cover/8/e/c/4/8ec47ce61b4e4a84f566ecbdb3f898cd.jpg" 
-                  artistsNames={'Dương Hoàng Yến, Quân A.P'} 
-                  title={'Tự Nắm Tay Mình'}
-                />
-              </div> */}
+      
+              <List
+                style={{display: preSong && preSong.length ? "unset" : "none"}}
+                dataSource={preSong}
+                renderItem={item => (
+                  <List.Item key={item.encodeId} className="previous-song">
+                      <ListSongQueue thumbnail={item.thumbnail} alias={item.alias} artistsNames={item.artistsNames} title={item.title} />
+                  </List.Item>
+                )}
+              >
+              </List>
               <div className="current-song">
                 <ListSongQueue 
                   thumbnail={currSong.thumbnail || currSongInfo.thumbnail}
@@ -94,11 +89,6 @@ function DrawerQueue() {
                   </List.Item>
                 )}
               >
-                {/* {loading && hasMore && (
-                  <div className="demo-loading-container">
-                    <Spin/>
-                  </div>
-                )} */}
               </List>
              
               <div className="title-next-song">
@@ -113,11 +103,6 @@ function DrawerQueue() {
                   </List.Item>
                 )}
               >
-                {/* {loading && hasMore && (
-                  <div className="demo-loading-container">
-                    <Spin/>
-                  </div>
-                )} */}
               </List>
             </div>
           </div>

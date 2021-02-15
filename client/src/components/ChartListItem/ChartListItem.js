@@ -1,5 +1,6 @@
 import React from 'react'
 import { getPercent } from '../../commons/util';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function ChartListItem(props) {
     const {items,chart} = props;
@@ -13,7 +14,13 @@ function ChartListItem(props) {
                     <div className="list song-data" key={track.encodeId}>
                         <div className="song-left">
                             <div className="ranking"><span className={`number${index+1}`}>{index + 1}</span></div>
-                            <img src={track.thumbnail}  alt={track.alias}/>
+                            <LazyLoadImage
+                                effect="blur"
+                                alt={track.alias}
+                                height={'100%'}
+                                src={track.thumbnail} 
+                                width={'100%'}
+                            />
                         </div>
                         <div className="song-info">
                             <span className="song-title">{track.title}</span>

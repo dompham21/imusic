@@ -1,4 +1,5 @@
 import * as queueTypes from '../constants/queue_constant';
+import { removeSongFromQueue } from '../actions/queue_action';
 
 
 const initialState = {
@@ -15,9 +16,11 @@ const reducer = (state = initialState, action) => {
         return addSongToQueue(state, action);
       }
       case queueTypes.ADD_PLAYLIST_TO_QUEUE: {
-        console.log(action.data);
-
         return addPlaylistToQueue(state,action);
+      }
+      case queueTypes.REMOVE_SONG_FROM_QUEUE: {
+        // return removeSongFromQueue(state,action);
+        return {...state,queues: state.queues.filter(i => i.encodeId !== action.encodeId)}
       }
       default:
         return state;
@@ -27,20 +30,23 @@ const reducer = (state = initialState, action) => {
   
 
   const addSongToQueue = (state, action) => {
-    const con = state.ids.find(id => id === action.song.id);
-    // only add a song to the queue if this song isn't added before
-    if (typeof con === 'undefined') {
-      return { queues: [...state.queues, action.song], ids: [...state.ids, action.song.id] };
-    }
-    return state;
+      return {...state,queues: state.queues.concat(action.data.items),ids: action.encodeId }
+    
   }
 
   const addPlaylistToQueue = (state,action) => {
     if(state.idPlaylist !== action.encodeId){
       return {...state,queues: state.queues.concat(action.data.items),idPlaylist: action.encodeId }
-      // return { queues: [...state.queues, action.data.items], idPlaylist: action.encodeId };
     }
     return state;
   }
 
+  // const removeSongFromQueue = (state,action) => {
+  //   return {...state,queues: state.queues.filter(i => i.encodeId !== action.encodeId)}
+  //   const con = state.ids.find(id => id === action.encodeId);
+  //   if (typeof con === 'undefined') {
+  //     return {...state,queues: state.queues.concat(action.data.items),ids: action.encodeId }
+  //   }
+  //   return state;
+  // }
   export default reducer;

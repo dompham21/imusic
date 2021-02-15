@@ -3,22 +3,27 @@ import './Player.css';
 import { BsMusicNoteBeamed,BsMusicNote } from 'react-icons/bs';
 import { FiVolume1,FiVolume2,FiVolumeX } from 'react-icons/fi'
 import { BsFillSkipEndFill,BsFillSkipStartFill,BsFillPlayFill,BsMusicNoteList,BsPauseFill } from 'react-icons/bs';
-import {  formatTimeAudio } from '../../commons/util';
+import {  formatTimeAudio, arrayRemove } from '../../commons/util';
 import { useSelector,useDispatch } from 'react-redux';
 import {  showDrawerQueue } from '../../actions/ui_action';
 import TimeSlider from "react-input-slider";
 import { fetchSongSuggested, pauseSongAction, togglePausePlaySongAction, fetchSong } from '../../actions/song_action';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 function Player() {
+    let defaultVolume  = localStorage.getItem('imusic_defaultVolume');
     const urlSongStorage = JSON.parse(localStorage.getItem('imusic_urlSong'))
     const hasPlayer = localStorage.getItem('imusic_hasPlayer');
-    const currSongInfo = JSON.parse(localStorage.getItem('imusic_currSongInfo'));
-    const queues = useSelector(state => state.queue.queues)
+    let suggestedSongs = useSelector(state => state.song.suggestedSongs);
 
+    const currSongInfo = JSON.parse(localStorage.getItem('imusic_currSongInfo'));
+    const queues = JSON.parse(localStorage.getItem('imusic_queue')).itemsMap
+    let queue = JSON.parse(localStorage.getItem('imusic_queue'))
+    let { recommend } = queue 
     const isPlaying = useSelector(state => state.song.isPlaying)
     const [currentTime,setCurrentTime] = useState(0);
-    const [volume,setVolume] = useState(1);
+    const [volume,setVolume] = useState(defaultVolume);
     const urlSongRedux = useSelector(state => state.song.urlSong)
     const idCurrSong = useSelector(state => state.song.idSong)
     const toggeShowDrawerQueue = useSelector(state => state.ui.toggeShowDrawerQueue)
@@ -36,8 +41,12 @@ function Player() {
     }, [isPlaying])
 
     const handleLoadedData = () => {
+        audioRef.current.volume = volume;
         setDuration(audioRef.current.duration);
-        if (isPlaying) audioRef.current.play();
+        if (isPlaying) {
+            document.title = `${currSongInfo.title} - ${currSongInfo.artistsNames}`
+            audioRef.current.play();
+        }
     };
 
     const handleTimeSliderChange = ({ x }) => {
@@ -50,7 +59,7 @@ function Player() {
     const handleTimeSliderVolume = ({x}) => {
         audioRef.current.volume = x;
         setVolume(x);
-        
+        localStorage.setItem('imusic_defaultVolume',x)
     }
 
     const handlePausePlayClick = () => {
@@ -92,59 +101,80 @@ function Player() {
     }
 
     const playPrevOrNextSong = (prevOrnext) => {
-        console.log(prevOrnext)
         const prevOrNextSong = findSong(prevOrnext);
 
         if (!prevOrNextSong) return;
         dispatch(fetchSong(prevOrNextSong));
+        document.title = `${prevOrNextSong.title} - ${prevOrNextSong.artistsNames}`
+
         
     }
 
     const findSong = (prevOrnext) => {
-        let index = queues.map(i => i.encodeId).indexOf(idCurrSong)
-
-        if(index === -1) return null;
-        let length = queues.length
-
+        console.log(suggestedSongs);
+        let index = queues.map(i => i.encodeId).indexOf(currSongInfo.encodeId)
+        if(!recommend || !recommend.length) {
+            dispatch(fetchSongSuggested(currSongInfo.encodeId));
+        }
         switch (prevOrnext) {
             case "next":
-                if(index === length-1){
-                    return null;
+                if(queues.length - 1 === index && queues.length ) { //last element of playlist 
+                    let removeSong = queue.itemsMap.splice(queue.itemsMap[index],1);
+
+                    dispatch(fetchSongSuggested(currSongInfo.encodeId));
+                    
+                    localStorage.setItem('imusic_queue',JSON.stringify({...queue,preSong: [...queue.preSong,removeSong[0]],recommend: suggestedSongs,itemsMap: queue.itemsMap}))
+                    if(!recommend[0]) return null
+                    return recommend[0]
                 }
+                else if( index === -1){ //when playlist length == 0 then play suggested song  
+                   
+                    dispatch(fetchSongSuggested(currSongInfo.encodeId));
+                    if(!recommend[0]) return null
+                    localStorage.setItem('imusic_queue',JSON.stringify({...queue,preSong: [...queue.preSong,recommend[0]],recommend: suggestedSongs}))
+                    return recommend[0]
+                }
+                queue.itemsMap.splice(queue.itemsMap[index],1); // remove curr song from playlist and push to preSong
+
+                localStorage.setItem('imusic_queue',JSON.stringify({...queue,preSong: [...queue.preSong,queues[index]],itemsMap: queue.itemsMap}))
                 return queues[index + 1] ;
             case "prev":
-               if(index === 0){
-                   return null;
-               }
-                // play the last song in the queue if the index is 0 otherwise play the prev song
-                return queues[index - 1];
+            
+                let pre =  queue.preSong.splice(queue.preSong.length - 1,1);
+                localStorage.setItem('imusic_queue',JSON.stringify({...queue,preSong: queue.preSong}))
+                if(!pre.length) return null
+                return pre[0];
+
             default:
                 return null;
         }
     }
     const handleEnded = () => {
-
+        playPrevOrNextSong('next');
     }
     return (
         <div className="player-controls" style={{display: (hasPlayer === "true") || isPlaying ? "unset":"none"}}>
             <div className="player-container">
             <audio
-                onEnded={handleEnded}
+                // onEnded={handleEnded}
                 ref={audioRef}
                 src={handleQualitySource()}
                 onLoadedData={handleLoadedData}
                 onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
-                onEnded={() => dispatch(pauseSongAction())}
+                onEnded={handleEnded}
             />
                 <div className="player-controls-left">
                     <div className="media-animate">
                         <div className="media-left">
                             <div className="thumbnail-wrapper">
                                 <div className="thumbnail">
-                                    <img 
+                                    <LazyLoadImage
                                         className="img-rounded" 
+                                        effect="blur"
+                                        alt={currSongInfo && currSongInfo.alias}
+                                        height={'100%'}
                                         src={currSongInfo && currSongInfo.thumbnail} 
-                                        alt={currSongInfo && currSongInfo.alias} 
+                                        width={'100%'} 
                                         style={{animationPlayState: isPlaying ? "running" : "paused" }}
                                     />
                                 </div>

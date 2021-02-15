@@ -26,7 +26,7 @@ import { playSongAction,pauseSongAction,fetchPlaylistSongSuccess, fetchPlaylistS
 
 import { getPlaylist,getGallery } from '../apis/playlist_api';
 import { getSongPlaylist,getSong, getSongSuggested } from '../apis/song_api';
-import { addPlaylistToQueue } from '../actions/queue_action';
+import { addPlaylistToQueue, addSongToQueue } from '../actions/queue_action';
 
 
 
@@ -86,9 +86,13 @@ function* fetchSuggestedSongSaga(payload) {
 
     const resp = yield call(getSongSuggested,encodeId)
     const { status, data } = resp;
-
+    console.log(data)
     if (status === STATUS_CODE.SUCCESS) {
-        yield put(fetchSongSuggestedSuccess(data));       
+        let queue = JSON.parse(localStorage.getItem('imusic_queue'))
+
+        localStorage.setItem('imusic_queue',JSON.stringify({...queue,recommend: data}))
+        yield  put(addSongToQueue(data,encodeId))    
+        yield put(fetchSongSuggestedSuccess(data));   
     } else {
         yield put(fetchSong(data));
     }
@@ -108,12 +112,14 @@ function* fetchSongPlaylistSaga(payload) {
         yield put(fetchSong(items[0]))
         yield  put(addPlaylistToQueue(data,encodeId))
         // save data song to queue local storage
+        let queue = JSON.parse(localStorage.getItem('imusic_queue'))
 
-        localStorage.setItem('imusic_queue',JSON.stringify({
+        localStorage.setItem('imusic_queue',JSON.stringify({...queue,
             currentEncodeId: items[0].encodeId,
             encodeIds: items.map(i=>i.encodeId),
-            recommend: {},
-            playlistEncodeId: encodeId
+            itemsMap: items,
+            playlistEncodeId: encodeId,
+            preSong: []
         }));
     } else {
         yield put(fetchPlaylistSongFailed(data));

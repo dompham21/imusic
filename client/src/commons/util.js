@@ -40,3 +40,13 @@ export function formatTimeAudio(time){
 
     return cur;
 }
+
+export function removeDuplicatesFromArrayObj(arr1,arr2){
+    return arr1.filter(i => arr2.findIndex(j => j.encodeId === i.encodeId) === -1) 
+}
+
+export function arrayRemove(arr,value) {
+    return arr.filter(function(ele){ 
+        return ele != value; 
+    });
+}

@@ -8,8 +8,8 @@ export const getSongPlaylist = (encodeId) => {
         params: {
             type: 'playlist',
             encodeId: encodeId,
-            start: 100,
-            count: 10
+            start: 0,
+            count: 20
         }
     });
 };
@@ -26,6 +26,8 @@ export const getSongSuggested = (encodeId) => {
     return axiosService.get(`${GET_SONG_SUGGESTED_ENDPOINT}`,{
         params: {
             encodeId: encodeId,
+            start: 0,
+            count: 5
         }
     });
 };

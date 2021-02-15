@@ -1,13 +1,20 @@
 import React from 'react'
 import iconPlaying from '../assets/Images/icon-playing.gif'
 import { BsFillPlayFill } from 'react-icons/bs';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function ListSongQueue(props) {
     const {thumbnail, title, artistsNames, alias} = props
     return (
         <div className="list song-data queue">
             <div className="song-left">
-                <img src={thumbnail} alt={alias}/>
+                <LazyLoadImage
+                    effect="blur"
+                    alt={alias}
+                    height={40}
+                    src={thumbnail} 
+                    width={40} 
+                />
                 <div className="opacity"/>
                 <div className="action-container">
                     <button 

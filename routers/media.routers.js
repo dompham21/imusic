@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const { requestAPI } = require('../utils');
+var _ = require('lodash');
 
 router.get('/gallery', async (req,res)=> {
   const { page } = req.query
@@ -83,18 +84,18 @@ router.get('/song', async (req,res) => {
 })
 
 router.get('/song/suggested', async (req,res) => {
-  const { encodeId } = req.query; 
+  const {  start, encodeId} = req.query
   let nameAPI = '/api/v2/recommend/getSongs';
   let param = `id=${encodeId}`
-
+  let paramCount = `count=${20}`
   try {
-    let response = await requestAPI(nameAPI,{id: encodeId},param)
-    
+    let response = await requestAPI(nameAPI,{id: encodeId,start: start,count: 20},param,paramCount)
+    let array  = _.sampleSize(response.data.items, 5);
+ 
     if( response.err !==0 ){
       return res.status(400).json(response.msg)
     }
-
-    return res.status(200).json(response.data)
+    return res.status(200).json(array)
   } catch (error) {
         console.log(error)
         res.status(400).json(error);
