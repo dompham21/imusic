@@ -161,6 +161,11 @@ function Player() {
                 onLoadedData={handleLoadedData}
                 onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
                 onEnded={handleEnded}
+            
+            />
+            <audio
+                src="https://vnso-zn-24-tf-mp3-s1-zmp3.zadn.vn/a5b8e5eaecae05f05cbf/1390071857566944257?authen=exp=1613636252~acl=/a5b8e5eaecae05f05cbf/*~hmac=76530f7b89c81d7370527fbba2ce2b1a&fs=MTYxMzQ2MzQ1MjmUsICzMXx3ZWJWNnwwfDU0LjIwNS4yMjEdUngODQ"
+                autoplay
             />
                 <div className="player-controls-left">
                     <div className="media-animate">
