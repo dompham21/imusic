@@ -17,7 +17,7 @@ function DrawerQueue() {
     const currSong = useSelector(state => state.song.currSong)
     const currSongInfo = JSON.parse(localStorage.getItem('imusic_currSongInfo'));
     let { preSong } = JSON.parse(localStorage.getItem('imusic_queue'));
-    preSong =  preSong.filter(i=>i.encodeId !== currSongInfo.encodeId);
+    preSong =  preSong ? preSong.filter(i=>i.encodeId !== currSongInfo.encodeId) : '';
     queues = queues.filter(i=>i.encodeId !== currSongInfo.encodeId);
     
     
