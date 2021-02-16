@@ -5,4 +5,4 @@ export const GET_SONG_ENDPOINT = 'api/media/song';
 export const GET_SONG_SUGGESTED_ENDPOINT = 'api/media/song/suggested';
 
 
-export const ROOT_URL = 'https://imusicvn.herokuapp.com';
+export const ROOT_URL = '';

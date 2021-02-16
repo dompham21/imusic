@@ -156,7 +156,6 @@ function Player() {
         <div className="player-controls" style={{display: (hasPlayer === "true") || isPlaying ? "unset":"none"}}>
             <div className="player-container">
             <audio
-                // onEnded={handleEnded}
                 ref={audioRef}
                 src={handleQualitySource()}
                 onLoadedData={handleLoadedData}
