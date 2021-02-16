@@ -44,7 +44,7 @@ router.get('/playlist', async (req,res)=> {
 
 router.get('/song/playlist', async (req,res)=> {
     const {type, count, start, encodeId} = req.query
-  console.log(encodeId)
+
     let nameAPI = '/api/v2/song/getList';
     let param  = `id=${encodeId}type=${type}`
     let paramCount = `count=${count}`
@@ -64,7 +64,7 @@ router.get('/song/playlist', async (req,res)=> {
 
 
 router.get('/song', async (req,res) => {
-  ///api/v2/song/getStreaming?id=ZW70WWD9&ctime=1609761539
+
   const { encodeId } = req.query;  
   let nameAPI = '/api/v2/song/getStreaming';
   let param = `id=${encodeId}`

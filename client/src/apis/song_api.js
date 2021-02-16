@@ -4,7 +4,7 @@ import { ROOT_URL,GET_SONG_PLAYLIST_ENDPOINT,GET_SONG_ENDPOINT, GET_SONG_SUGGEST
 
 
 export const getSongPlaylist = (encodeId) => {
-    return axiosService.get(`/${GET_SONG_PLAYLIST_ENDPOINT}`,{
+    return axiosService.get(`${ROOT_URL}/${GET_SONG_PLAYLIST_ENDPOINT}`,{
         params: {
             type: 'playlist',
             encodeId: encodeId,
@@ -15,7 +15,7 @@ export const getSongPlaylist = (encodeId) => {
 };
 
 export const getSong = (encodeId) => {
-    return axiosService.get(`${GET_SONG_ENDPOINT}`,{
+    return axiosService.get(`${ROOT_URL}/${GET_SONG_ENDPOINT}`,{
         params: {
             encodeId: encodeId,
         }
@@ -23,7 +23,7 @@ export const getSong = (encodeId) => {
 };
   
 export const getSongSuggested = (encodeId) => {
-    return axiosService.get(`${GET_SONG_SUGGESTED_ENDPOINT}`,{
+    return axiosService.get(`${ROOT_URL}/${GET_SONG_SUGGESTED_ENDPOINT}`,{
         params: {
             encodeId: encodeId,
             start: 0,
